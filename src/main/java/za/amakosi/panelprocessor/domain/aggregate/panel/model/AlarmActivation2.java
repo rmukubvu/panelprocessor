@@ -15,7 +15,7 @@ public enum AlarmActivation2 implements Alarm<AlarmActivation2> {
     ALARM_2(2, "Cooling No Flow"),
     ALARM_3(3, "Engine Fail When Running"),
     ALARM_4(4, "Engine Fail to Start"),
-    ALARM_5(5, "Engine Overspeed"),
+    ALARM_5(5, "Engine Over speed"),
     ALARM_6(6, "I/O Diesel Board Comm Loss"),
     ALARM_7(7, "I/O Expansion 1 Comm Loss"),
     ALARM_8(8, "I/O Expansion 2 Comm Loss"),

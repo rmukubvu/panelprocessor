@@ -10,22 +10,22 @@ import java.util.Optional;
 @AllArgsConstructor
 public enum AlarmActivation3 implements Alarm<AlarmActivation3> {
 
-    ALARM_0(0, "Faulty Pressure Transducer"),
-    ALARM_1(1, "Weekly Test Required"),
-    ALARM_2(2, "Cooling No Flow"),
-    ALARM_3(3, "Engine Fail When Running"),
-    ALARM_4(4, "Engine Fail to Start"),
-    ALARM_5(5, "Engine Overspeed"),
-    ALARM_6(6, "I/O Diesel Board Comm Loss"),
-    ALARM_7(7, "I/O Expansion 1 Comm Loss"),
-    ALARM_8(8, "I/O Expansion 2 Comm Loss"),
-    ALARM_9(9, "I/O Expansion 3 Comm Loss"),
-    ALARM_10(10, "Engine Pickup 1 Fail"),
-    ALARM_11(11, "Engine Pickup 2 Fail"),
-    ALARM_12(12, "Low Ambient Temperature"),
-    ALARM_13(13, "Engine Run"),
-    ALARM_14(14, "CANBUS Comm Systems Failure"),
-    ALARM_15(15, "Pump on Demand");
+    ALARM_0(0, "Invalid Cut-In"),
+    ALARM_1(1, "Test Mode"),
+    ALARM_2(2, "Pneumatic Failure to Start"),
+    ALARM_3(3, "Auto-Mode Bypass"),
+    ALARM_4(4, "Hydraulic Failure to Start"),
+    ALARM_5(5, "Bell Silenced"),
+    ALARM_6(6, "APS AD General Default"),
+    ALARM_7(7, "Over pressure"),
+    ALARM_8(8, "Under pressure"),
+    ALARM_9(9, "Low Suction Pressure"),
+    ALARM_10(10, "Flow Start"),
+    ALARM_11(11, "Battery 1 Over voltage"),
+    ALARM_12(12, "Battery 2 Over voltage"),
+    ALARM_13(13, "High Ambient Temperature"),
+    ALARM_14(14, "Not Used"),
+    ALARM_15(15, "Low Raw Water Flow");
 
     private final Integer alarm;
     private final String description;
