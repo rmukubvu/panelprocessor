@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  activemq:
+    broker-url: "tcp://localhost:5672"
+    user: "guest"
+    password: "guest"
+  data:
+    mongodb:
+      host: localhost
+      database: field-db
+      auto-index-creation: true
+      port: 27017
+jwt:
+  expiration:
+    time: 900000
