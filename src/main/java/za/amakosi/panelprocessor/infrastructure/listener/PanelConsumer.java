@@ -2,7 +2,7 @@ package za.amakosi.panelprocessor.infrastructure.listener;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import za.amakosi.panelprocessor.infrastructure.service.MessageProcessorService;
+import za.amakosi.panelprocessor.infrastructure.listener.service.MessageProcessorService;
 
 public class PanelConsumer {
 

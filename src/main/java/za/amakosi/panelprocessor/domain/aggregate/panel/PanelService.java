@@ -4,9 +4,13 @@ import org.springframework.stereotype.Service;
 import za.amakosi.panelprocessor.domain.aggregate.panel.model.*;
 import za.amakosi.panelprocessor.domain.aggregate.panel.tcp.PanelTCPClient;
 
+import java.time.Period;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Integer.parseInt;
@@ -21,6 +25,15 @@ public class PanelService {
         var response = client.sendMessage(panelRequestMessage.toString());
         var panelResponseMessage = PanelResponseMessage.valueOf(response);
         return buildResponse(panelRequestMessage, panelResponseMessage);
+    }
+
+    public List<RegisterInfo> registerInfo() {
+        return Arrays.asList(Register.values()).stream().map( register -> RegisterInfo.builder()
+                .address(register.getAddress())
+                .registerSize(register.getRegisterSize())
+                .friendlyName(register.getFriendlyName())
+                .unit(register.getUnit())
+                .build()).collect(Collectors.toList());
     }
 
     private List<ResponseMessage> buildResponse(PanelRequestMessage panelRequestMessage,PanelResponseMessage panelResponseMessage) {
@@ -47,5 +60,13 @@ public class PanelService {
         var intValue = parseInt(hexRegisterValue, RADIX);
         Optional<String> alarmCode = AlarmFactory.getAlarmCode(registerAddress, intValue);
         return alarmCode.orElseGet(() -> String.format("%d %s", intValue, registerInfo.getUnit()));
+    }
+
+    private String getLocalDateFrom(Integer date) {
+        return null;
+    }
+
+    private String getLocalTimeFrom(Integer time) {
+        return null;
     }
 }

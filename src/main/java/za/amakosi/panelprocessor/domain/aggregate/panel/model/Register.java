@@ -77,7 +77,7 @@ public enum Register {
     RUN_TIME(42017, 0, "hrs", "Run Time"),
     HOURS_SINCE_LAST_RUN(42018, 0, "hrs", "Hours Since Last Run"),
     NOT_USED_6(42019, 0, "", ""),
-    CU_IN(42029, 0, "", "Cut-In"),
+    CUT_IN(42029, 0, "", "Cut-In"),
     CUT_OUT(43030, 0, "kPa", "Cut-Out");
 
 

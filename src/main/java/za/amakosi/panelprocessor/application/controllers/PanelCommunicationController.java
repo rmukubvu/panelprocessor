@@ -21,6 +21,11 @@ public class PanelCommunicationController {
 
     private PanelService panelService;
 
+    @GetMapping("/register-info")
+    public ResponseEntity<?> registerInfo() {
+       return ResponseEntity.ok().body(panelService.registerInfo());
+    }
+
     @PostMapping
     public @ResponseBody ResponseEntity<Collection<ResponseMessage>> queryPanel(@Validated @RequestBody PanelRequestMessage model) {
         var response = panelService.queryPanel(PanelRequestMessageMapper.INSTANCE.toDomain(model));
