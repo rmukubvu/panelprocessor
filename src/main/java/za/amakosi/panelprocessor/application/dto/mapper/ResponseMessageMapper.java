@@ -13,6 +13,8 @@ public interface ResponseMessageMapper {
     default ResponseMessage fromDomain(za.amakosi.panelprocessor.domain.aggregate.panel.model.ResponseMessage model) {
         return ResponseMessage.builder()
                 .label(model.getLabel())
+                .value(model.getValue())
+                .unitOfMeasure(model.getUnitOfMeasure())
                 .valueText(model.getValueText())
                 .build();
     }

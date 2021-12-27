@@ -44,19 +44,34 @@ public class PanelService {
             var hexRegisterValue = panelResponseMessage.getRegisterHexValues().get(i);
             responseMessages.add(ResponseMessage.builder()
                     .label(registerInfo.getFriendlyName())
+                    .value(getValueTextFor(registerAddress, hexRegisterValue))
+                    .unitOfMeasure(registerInfo.getUnit())
                     .valueText(getFormattedValueTextFor(registerAddress, registerInfo, hexRegisterValue))
                     .build());
         });
         return responseMessages;
     }
 
-    private String getFormattedValueTextFor(Integer registerAddress,Register registerInfo , String hexRegisterValue ) {
-        final int CONTROLLER_INFORMATION_ADDRESS_NOT_IN = 41001;
+
+    private String getValueTextFor(Integer registerAddress,String hexRegisterValue ) {
         final int RADIX = 16;
+        final int CONTROLLER_INFORMATION_ADDRESS_NOT_IN = 41001;
         if (registerAddress < CONTROLLER_INFORMATION_ADDRESS_NOT_IN) {
             return hexRegisterValue;
         }
         //check if it's an alarm
+        var intValue = parseInt(hexRegisterValue, RADIX);
+        Optional<String> alarmCode = AlarmFactory.getAlarmCode(registerAddress, intValue);
+        return alarmCode.orElseGet(() -> String.format("%d", intValue));
+    }
+
+    private String getFormattedValueTextFor(Integer registerAddress,Register registerInfo , String hexRegisterValue ) {
+        final int CONTROLLER_INFORMATION_ADDRESS_NOT_IN = 41001;
+        if (registerAddress < CONTROLLER_INFORMATION_ADDRESS_NOT_IN) {
+            return hexRegisterValue;
+        }
+        //check if it's an alarm
+        final int RADIX = 16;
         var intValue = parseInt(hexRegisterValue, RADIX);
         Optional<String> alarmCode = AlarmFactory.getAlarmCode(registerAddress, intValue);
         return alarmCode.orElseGet(() -> String.format("%d %s", intValue, registerInfo.getUnit()));

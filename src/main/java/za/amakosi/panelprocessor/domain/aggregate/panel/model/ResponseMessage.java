@@ -7,5 +7,7 @@ import lombok.Getter;
 @Getter
 public class ResponseMessage {
     private String label;
+    private String value;
+    private String unitOfMeasure;
     private String valueText;
 }
