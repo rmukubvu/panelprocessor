@@ -1,8 +1,9 @@
 package za.amakosi.panelprocessor.domain.aggregate.panel.tcp;
 
-import lombok.SneakyThrows;
+
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -14,24 +15,46 @@ public class PanelTCPClient {
     private PrintWriter out;
     private BufferedReader in;
 
-    @SneakyThrows
-    public void startConnection(String ip, int port) {
-        clientSocket = new Socket(ip, port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    public void openConnection(String ip, int port) {
+        try {
+            clientSocket = new Socket(ip, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @SneakyThrows
     public String sendMessage(String msg) {
         out.println(msg);
-        String resp = in.readLine();
+        String resp = null;
+        try {
+            resp = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return resp;
     }
 
-    @SneakyThrows
-    public void stopConnection() {
-        in.close();
+    public void closeConnection() {
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         out.close();
-        clientSocket.close();
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

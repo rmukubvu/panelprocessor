@@ -4,8 +4,6 @@ import org.springframework.stereotype.Service;
 import za.amakosi.panelprocessor.domain.aggregate.panel.model.*;
 import za.amakosi.panelprocessor.domain.aggregate.panel.tcp.PanelTCPClient;
 
-import java.time.Period;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,14 +19,15 @@ public class PanelService {
     public List<ResponseMessage> queryPanel(PanelRequestMessage panelRequestMessage) {
         panelRequestMessage.validator();
         var client = new PanelTCPClient();
-        client.startConnection(panelRequestMessage.getPanelAddress(), panelRequestMessage.getPanelPort());
+        client.openConnection(panelRequestMessage.getPanelAddress(), panelRequestMessage.getPanelPort());
         var response = client.sendMessage(panelRequestMessage.toString());
+        client.closeConnection();
         var panelResponseMessage = PanelResponseMessage.valueOf(response);
         return buildResponse(panelRequestMessage, panelResponseMessage);
     }
 
     public List<RegisterInfo> registerInfo() {
-        return Arrays.asList(Register.values()).stream().map( register -> RegisterInfo.builder()
+        return List.of(Register.values()).stream().map( register -> RegisterInfo.builder()
                 .address(register.getAddress())
                 .registerSize(register.getRegisterSize())
                 .friendlyName(register.getFriendlyName())
@@ -74,7 +73,7 @@ public class PanelService {
         final int RADIX = 16;
         var intValue = parseInt(hexRegisterValue, RADIX);
         Optional<String> alarmCode = AlarmFactory.getAlarmCode(registerAddress, intValue);
-        return alarmCode.orElseGet(() -> String.format("%d %s", intValue, registerInfo.getUnit()));
+        return alarmCode.orElseGet(() -> String.format("%d%s", intValue, registerInfo.getUnit()));
     }
 
     private String getLocalDateFrom(Integer date) {
